@@ -17,7 +17,7 @@ podman run \
 
 
 podman run \
---pod=app-pgstac \
+-d --pod=app-pgstac \
 -e APP_HOST=0.0.0.0 \
 -e APP_PORT=8082 \
 -e RELOAD=true \
