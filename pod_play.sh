@@ -25,8 +25,8 @@ podman run \
 -e POSTGRES_USER=username \
 -e POSTGRES_PASS=password \
 -e POSTGRES_DBNAME=postgis \
--e POSTGRES_HOST_READER=database \
--e POSTGRES_HOST_WRITER=database \
+-e POSTGRES_HOST_READER=app-pgstac \
+-e POSTGRES_HOST_WRITER=app-pgstac \
 -e POSTGRES_PORT=5432 \
 -e WEB_CONCURRENCY=10 \
 -e VSI_CACHE=TRUE \
@@ -37,6 +37,8 @@ podman run \
 -e USE_API_HYDRATE=${USE_API_HYDRATE:-false} \
 -v ./stac_fastapi:/app/stac_fastapi:Z \
 -v ./scripts:/app/scripts:Z \
---name stac-fastapi-pgstac docker.io/stac-utils/stac-fastapi bash -c "./scripts/wait-for-it.sh database:5432 && python -m stac_fastapi.pgstac.app"
+--name stac-fastapi-pgstac docker.io/stac-utils/stac-fastapi bash -c "./scripts/wait-for-it.sh app-pgstac:5432 && python -m stac_fastapi.pgstac.app"
 #
-podman run --rm docker.io/stac-utils/stac-fastapi bash -c "./scripts/wait-for-it.sh app-pgstac:8082 -- python /app/scripts/ingest_joplin.py http://app-pgstac:8082 "
+podman run \
+--pod=app-pgstac \
+--rm docker.io/stac-utils/stac-fastapi bash -c "./scripts/wait-for-it.sh app-pgstac:8082 -- python /app/scripts/ingest_joplin.py http://app-pgstac:8082 "
