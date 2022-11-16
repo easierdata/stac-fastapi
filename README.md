@@ -84,6 +84,12 @@ The application will be started on <http://localhost:8080>.
 By default, the apps are run with uvicorn hot-reloading enabled. This can be turned off by changing the value
 of the `RELOAD` env var in docker-compose.yml to `false`.
 
+Workflow for ingest stac json
+```shell
+make image
+make run-joplin-pgstac
+```
+
 #### Note to Docker for Windows users
 
 You'll need to enable experimental features on Docker for Windows in order to run the docker-compose,
