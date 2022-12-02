@@ -62,6 +62,11 @@ run-joplin-sqlalchemy:
 run-joplin-pgstac:
 	docker-compose run --rm loadjoplin-pgstac
 
+.PHONY: run-landsat-pgstac
+run-landsat-pgstac:
+	docker-compose run --rm loadlandsat-pgstac
+
+
 .PHONY: test
 test: test-sqlalchemy test-pgstac
 
