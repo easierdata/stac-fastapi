@@ -1,4 +1,7 @@
 from datetime import datetime, timedelta
+from urllib.parse import quote_plus
+
+import orjson
 
 from ..conftest import MockStarletteRequest
 
@@ -146,6 +149,12 @@ def test_app_query_extension_gt(load_test_data, app_client, postgres_transaction
 
     params = {"query": {"proj:epsg": {"gt": test_item["properties"]["proj:epsg"]}}}
     resp = app_client.post("/search", json=params)
+    assert resp.status_code == 200
+    resp_json = resp.json()
+    assert len(resp_json["features"]) == 0
+
+    params["query"] = quote_plus(orjson.dumps(params["query"]))
+    resp = app_client.get("/search", params=params)
     assert resp.status_code == 200
     resp_json = resp.json()
     assert len(resp_json["features"]) == 0
@@ -434,6 +443,12 @@ def test_app_search_response_duplicate_forwarded_headers(
     for feature in resp.json()["features"]:
         for link in feature["links"]:
             assert link["href"].startswith("https://testserver:1234/")
+
+
+async def test_get_features_content_type(app_client, load_test_data):
+    item = load_test_data("test_item.json")
+    resp = await app_client.get(f"collections/{item['collection']}/items")
+    assert resp.headers["content-type"] == "application/geo+json"
 
 
 def test_item_collection_filter_bbox(load_test_data, app_client, postgres_transactions):
