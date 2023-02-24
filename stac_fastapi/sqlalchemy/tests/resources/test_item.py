@@ -688,7 +688,7 @@ def test_item_search_get_query_extension(app_client, load_test_data):
 def test_get_missing_item_collection(app_client):
     """Test reading a collection which does not exist"""
     resp = app_client.get("/collections/invalid-collection/items")
-    assert resp.status_code == 200
+    assert resp.status_code == 404
 
 
 def test_pagination_item_collection(app_client, load_test_data):
@@ -716,7 +716,7 @@ def test_pagination_item_collection(app_client, load_test_data):
         idx += 1
         page_data = page.json()
         item_ids.append(page_data["features"][0]["id"])
-        next_link = list(filter(lambda l: l["rel"] == "next", page_data["links"]))
+        next_link = list(filter(lambda link: link["rel"] == "next", page_data["links"]))
         if not next_link:
             break
         query_params = parse_qs(urlparse(next_link[0]["href"]).query)
@@ -756,7 +756,7 @@ def test_pagination_post(app_client, load_test_data):
         idx += 1
         page_data = page.json()
         item_ids.append(page_data["features"][0]["id"])
-        next_link = list(filter(lambda l: l["rel"] == "next", page_data["links"]))
+        next_link = list(filter(lambda link: link["rel"] == "next", page_data["links"]))
         if not next_link:
             break
         # Merge request bodies
@@ -787,7 +787,7 @@ def test_pagination_token_idempotent(app_client, load_test_data):
 
     page = app_client.get("/search", params={"ids": ",".join(ids), "limit": 3})
     page_data = page.json()
-    next_link = list(filter(lambda l: l["rel"] == "next", page_data["links"]))
+    next_link = list(filter(lambda link: link["rel"] == "next", page_data["links"]))
 
     # Confirm token is idempotent
     resp1 = app_client.get(
