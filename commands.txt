@@ -1,0 +1,3 @@
+make docker-run-pgstac
+make run-joplin-pgstac
+docker-compose down
