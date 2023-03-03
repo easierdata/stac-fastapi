@@ -168,29 +168,35 @@ async def test_update_item_cid(
 ):
     coll = load_test_collection
     update_item = load_test_item
+    # This is the metadata json for the item to be updated. e.g.
+    # {
+    #     "id": "LC09_L2SP_041034_20221005_20221007_02_T1",
+    #     "assets": {"MTL.json": {"alternate": {"IPFS": "<CID>"}}},
+    # }
 
-    # Get item json
+    # Get existing item based on id from metadata json
     resp = await app_client.get(f"/collections/{coll.id}/items/{update_item.id}")
     assert resp.status_code == 200
 
-    # make a copy of the item json
-    new_item = resp.json()
+    # make a copy of the item json to modify
+    new_item_json = resp.json()
 
-    for asset in new_item["assets"]:
+    # Loop through assets in metadata json and add or update the "IPFS" entry in "alternate" key
+    for asset in new_item_json["assets"]:
         # If the item is missing the "IPFS" entry in "alternate", add it
-        if "IPFS" not in new_item["assets"][asset]["alternate"]:
-            new_item["assets"][asset]["alternate"]["IPFS"] = update_item[asset][
+        if "IPFS" not in new_item_json["assets"][asset]["alternate"]:
+            new_item_json["assets"][asset]["alternate"]["IPFS"] = update_item[asset][
                 "alternate"
             ]["IPFS"]
         # If the item has the "IPFS" entry in "alternate", update it
         else:
-            new_item["assets"][asset]["alternate"]["IPFS"] = update_item[asset][
+            new_item_json["assets"][asset]["alternate"]["IPFS"] = update_item[asset][
                 "alternate"
             ]["IPFS"]
 
-    # Update item with modified json
+    # Update existing item with modified json
     resp = await app_client.put(
-        f"/collections/{coll.id}/items/{update_item.id}", content=new_item.json()
+        f"/collections/{coll.id}/items/{update_item.id}", content=new_item_json
     )
     assert resp.status_code == 200
     # put_item = Item.parse_obj(resp.json())
@@ -202,7 +208,7 @@ async def test_update_item_cid(
     get_item = Item.parse_obj(resp.json())
     assert get_item.status_code == 200
 
-    # Assert that the item has been updated with the new IPFS hash
+    # Assert that one of the assets in the updated item has the same "IPFS" entry in "alternate" as the metadata json
     assert (
         get_item.assets["B1"]["alternate"]["IPFS"]
         == update_item["B1"]["alternate"]["IPFS"]
