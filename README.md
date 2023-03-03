@@ -1,3 +1,5 @@
+<!-- markdownlint-disable MD033 MD041 -->
+
 <p align="center">
   <img src="https://github.com/radiantearth/stac-site/raw/master/images/logo/stac-030-long.png" width=400>
   <p align="center">FastAPI implemention of the STAC API spec.</p>
@@ -65,11 +67,11 @@ pip install -e stac_fastapi/pgstac
 ### Pre-built Docker images
 
 Pre-built images are available from the [Github Container Registry](https://github.com/stac-utils/stac-fastapi/pkgs/container/stac-fastapi).
-The latest images are tagged with `latest-pgstac` and `latest-sqlalchemy`.
+The latest images are tagged with `master-pgstac` and `master-sqlalchemy`.
 To pull the image to your local system:
 
 ```shell
-docker pull ghcr.io/stac-utils/stac-fastapi:latest-pgstac  # or latest-sqlalchemy
+docker pull ghcr.io/stac-utils/stac-fastapi:master-pgstac  # or latest-sqlalchemy
 ```
 
 This repository provides two example [Docker compose](https://docs.docker.com/compose/) files that demonstrate how you might link the pre-built images with a postgres/pgstac database:
@@ -108,6 +110,23 @@ make run-joplin-pgstac
 ```
 
 #### Note to Docker for Windows users
+### nginx proxy
+
+This repo includes an example nginx proxy service.
+To start:
+
+```shell
+make docker-run-nginx-proxy
+```
+
+The proxy will be started on <http://localhost>, with the pgstac app available at <http://localhost/api/v1/pgstac/> and the sqlalchemy app at <http://localhost/api/v1/sqlalchemy/>.
+If you need to customize the proxy port, use the `STAC_FASTAPI_NGINX_PORT` environment variable:
+
+```shell
+STAC_FASTAPI_NGINX_PORT=7822 make docker-run-nginx-proxy
+```
+
+### Note to Docker for Windows users
 
 You'll need to enable experimental features on Docker for Windows in order to run the docker-compose,
 due to the "--platform" flag that is required to allow the project to run on some Apple architectures.
