@@ -167,39 +167,46 @@ async def test_update_item_cid(
     app_client, load_test_data: Callable, load_test_collection, load_test_item
 ):
     coll = load_test_collection
-    item = load_test_item
+    update_item = load_test_item
 
     # Get item json
-    resp = await app_client.get(f"/collections/{coll.id}/items/{item.id}")
+    resp = await app_client.get(f"/collections/{coll.id}/items/{update_item.id}")
+    assert resp.status_code == 200
 
-    for asset in resp.json()["assets"]:
+    # make a copy of the item json
+    new_item = resp.json()
+
+    for asset in new_item["assets"]:
         # If the item is missing the "IPFS" entry in "alternate", add it
-        if "IPFS" not in resp.json()["assets"][asset]["alternate"]:
-            resp.json()["assets"][asset]["alternate"]["IPFS"] = item[asset][
+        if "IPFS" not in new_item["assets"][asset]["alternate"]:
+            new_item["assets"][asset]["alternate"]["IPFS"] = update_item[asset][
                 "alternate"
             ]["IPFS"]
         # If the item has the "IPFS" entry in "alternate", update it
         else:
-            item.json()["assets"][asset]["alternate"]["IPFS"] = item[asset][
+            new_item["assets"][asset]["alternate"]["IPFS"] = update_item[asset][
                 "alternate"
             ]["IPFS"]
 
     # Update item with modified json
     resp = await app_client.put(
-        f"/collections/{coll.id}/items/{item.id}", content=item.json()
+        f"/collections/{coll.id}/items/{update_item.id}", content=new_item.json()
     )
     assert resp.status_code == 200
     # put_item = Item.parse_obj(resp.json())
 
     # Get item json after update
-    resp = await app_client.get(f"/collections/{coll.id}/items/{item.id}")
+    resp = await app_client.get(f"/collections/{coll.id}/items/{update_item.id}")
     assert resp.status_code == 200
 
     get_item = Item.parse_obj(resp.json())
     assert get_item.status_code == 200
 
     # Assert that the item has been updated with the new IPFS hash
-    assert get_item.assets["B1"]["alternate"]["IPFS"] == item["B1"]["alternate"]["IPFS"]
+    assert (
+        get_item.assets["B1"]["alternate"]["IPFS"]
+        == update_item["B1"]["alternate"]["IPFS"]
+    )
 
 
 async def test_update_item_mismatched_collection_id(
