@@ -1,33 +1,30 @@
 {
-    "landsat-c2l1": {
-      "LC09_L2SP_041034_20221005_20221007_02_T1": {
-        "assets": {
-          "MTL.json": "<CID>",
-          "ANG.txt": "<CID>",
-          "MTL.txt": "<CID>",
-          "MTL.xml": "<CID>",
-          "QA_PIXEL.TIF": "<CID>",
-          "QA_RADSAT.TIF": "<CID>",
-          "SR_B1.TIF": "<CID>",
-          "SR_B2.TIF": "<CID>",
-          "SR_B3.TIF": "<CID>",
-          "SR_B4.TIF": "<CID>",
-          "SR_B5.TIF": "<CID>",
-          "SR_B6.TIF": "<CID>",
-          "SR_B7.TIF": "<CID>",
-          "SR_QA_AEROSOL.TIF": "<CID>",
-          "ST_ATRAN.TIF": "<CID>",
-          "ST_B10.TIF": "<CID>",
-          "ST_CDIST.TIF": "<CID>",
-          "ST_DRAD.TIF": "<CID>",
-          "ST_EMIS.TIF": "<CID>",
-          "ST_EMSD.TIF": "<CID>",
-          "ST_QA.TIF": "<CID>",
-          "ST_TRAD.TIF": "<CID>",
-          "ST_URAD.TIF": "<CID>",
-          "thumb_large.jpeg": "<CID>",
-          "thumb_small.jpeg": "<CID>"
-        }
-      }
-    }
+  "id": "LC09_L2SP_041034_20221005_20221007_02_T1",
+  "assets": {
+    "MTL.json": {"alternate": {"IPFS": "<CID>"}},
+    "ANG.txt": {"alternate": {"IPFS": "<CID>"}},
+    "MTL.txt": {"alternate": {"IPFS": "<CID>"}},
+    "MTL.xml": {"alternate": {"IPFS": "<CID>"}},
+    "QA_PIXEL.TIF": {"alternate": {"IPFS": "<CID>"}},
+    "QA_RADSAT.TIF": {"alternate": {"IPFS": "<CID>"}},
+    "SR_B1.TIF": {"alternate": {"IPFS": "<CID>"}},
+    "SR_B2.TIF": {"alternate": {"IPFS": "<CID>"}},
+    "SR_B3.TIF": {"alternate": {"IPFS": "<CID>"}},
+    "SR_B4.TIF": {"alternate": {"IPFS": "<CID>"}},
+    "SR_B5.TIF": {"alternate": {"IPFS": "<CID>"}},
+    "SR_B6.TIF": {"alternate": {"IPFS": "<CID>"}},
+    "SR_B7.TIF": {"alternate": {"IPFS": "<CID>"}},
+    "SR_QA_AEROSOL.TIF": {"alternate": {"IPFS": "<CID>"}},
+    "ST_ATRAN.TIF": {"alternate": {"IPFS": "<CID>"}},
+    "ST_B10.TIF": {"alternate": {"IPFS": "<CID>"}},
+    "ST_CDIST.TIF": {"alternate": {"IPFS": "<CID>"}},
+    "ST_DRAD.TIF": {"alternate": {"IPFS": "<CID>"}},
+    "ST_EMIS.TIF": {"alternate": {"IPFS": "<CID>"}},
+    "ST_EMSD.TIF": {"alternate": {"IPFS": "<CID>"}},
+    "ST_QA.TIF": {"alternate": {"IPFS": "<CID>"}},
+    "ST_TRAD.TIF": {"alternate": {"IPFS": "<CID>"}},
+    "ST_URAD.TIF": {"alternate": {"IPFS": "<CID>"}},
+    "thumb_large.jpeg": {"alternate": {"IPFS": "<CID>"}},
+    "thumb_small.jpeg": {"alternate": {"IPFS": "<CID>"}}
   }
+}
