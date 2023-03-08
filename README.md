@@ -109,7 +109,6 @@ make image
 make run-joplin-pgstac
 ```
 
-#### Note to Docker for Windows users
 ### nginx proxy
 
 This repo includes an example nginx proxy service.

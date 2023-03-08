@@ -132,3 +132,6 @@ venv
 
 # IDE
 .vscode
+
+# SSL
+certs
