@@ -236,3 +236,34 @@ async def load_test2_item(app_client, load_test_data, load_test2_collection):
     )
     assert resp.status_code == 200
     return Item.parse_obj(resp.json())
+
+
+@pytest.fixture
+async def load_test_collection_landsat_c2l1(app_client, load_test_data):
+    data = load_test_data("test_collection_landsat_c2l1.json")
+    resp = await app_client.post(
+        "/collections",
+        json=data,
+    )
+    assert resp.status_code == 200
+    return Collection.parse_obj(resp.json())
+
+
+@pytest.fixture
+async def load_test_item_LC09(
+    app_client, load_test_data, load_test_collection_landsat_c2l1
+):
+    coll = load_test_collection_landsat_c2l1
+    data = load_test_data("test_item_LC09.json")
+    resp = await app_client.post(
+        f"/collections/{coll.id}/items",
+        json=data,
+    )
+    assert resp.status_code == 200
+    return Item.parse_obj(resp.json())
+
+
+@pytest.fixture
+async def load_update_cid(load_test_data):
+    data = load_test_data("update_cid.json")
+    return data

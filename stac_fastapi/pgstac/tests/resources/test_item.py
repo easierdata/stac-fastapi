@@ -164,54 +164,50 @@ async def test_update_item(
 
 
 async def test_update_item_cid(
-    app_client, load_test_data: Callable, load_test_collection, load_test_item
+    app_client,
+    load_test_data: Callable,
+    load_test_collection_landsat_c2l1,
+    load_test_item_LC09,
+    load_update_cid,
 ):
-    coll = load_test_collection
-    update_item = load_test_item
-    # This is the metadata json for the item to be updated. e.g.
-    # {
-    #     "id": "LC09_L2SP_041034_20221005_20221007_02_T1",
-    #     "assets": {"MTL.json": {"alternate": {"IPFS": "<CID>"}}},
-    # }
+    coll = load_test_collection_landsat_c2l1
+    item: Item = load_test_item_LC09
+    update_cid = load_update_cid
 
-    # Get existing item based on id from metadata json
-    resp = await app_client.get(f"/collections/{coll.id}/items/{update_item.id}")
-    assert resp.status_code == 200
-
-    # make a copy of the item json to modify
-    new_item_json = resp.json()
-
-    # Loop through assets in metadata json and add or update the "IPFS" entry in "alternate" key
-    for asset in new_item_json["assets"]:
-        # If the item is missing the "IPFS" entry in "alternate", add it
-        if "IPFS" not in new_item_json["assets"][asset]["alternate"]:
-            new_item_json["assets"][asset]["alternate"]["IPFS"] = update_item[asset][
-                "alternate"
-            ]["IPFS"]
-        # If the item has the "IPFS" entry in "alternate", update it
+    # Loop through assets in item and add or update the "IPFS" entry in "alternate" key
+    for asset_name, asset in item.assets.items():
+        # If the asset is missing the "alternate" key, add it
+        if (
+            not asset.alternate
+        ):  # TODO Add a print statement to see why there is no alternate key
+            asset.alternate = {}
+        # If the asset is missing the "IPFS" entry in "alternate", add it
+        if "IPFS" not in asset.alternate:
+            asset.alternate["IPFS"] = update_cid["assets"][asset_name]["alternate"][
+                "IPFS"
+            ]
+        # If the asset has the "IPFS" entry in "alternate", update it
         else:
-            new_item_json["assets"][asset]["alternate"]["IPFS"] = update_item[asset][
-                "alternate"
-            ]["IPFS"]
+            asset.alternate["IPFS"] = update_cid["assets"][asset_name]["alternate"][
+                "IPFS"
+            ]
 
-    # Update existing item with modified json
+    # Update existing item with modified JSON
     resp = await app_client.put(
-        f"/collections/{coll.id}/items/{update_item.id}", content=new_item_json
+        f"/collections/{coll.id}/items/{item.id}", content=item.json()
     )
     assert resp.status_code == 200
-    # put_item = Item.parse_obj(resp.json())
 
-    # Get item json after update
-    resp = await app_client.get(f"/collections/{coll.id}/items/{update_item.id}")
+    # Get updated item JSON
+    resp = await app_client.get(f"/collections/{coll.id}/items/{item.id}")
     assert resp.status_code == 200
+    get_item = Item.parse_raw(resp.text)
+    assert get_item
 
-    get_item = Item.parse_obj(resp.json())
-    assert get_item.status_code == 200
-
-    # Assert that one of the assets in the updated item has the same "IPFS" entry in "alternate" as the metadata json
+    # Assert that one of the assets in the updated item has the same "IPFS" entry in "alternate" as the metadata JSON
     assert (
-        get_item.assets["B1"]["alternate"]["IPFS"]
-        == update_item["B1"]["alternate"]["IPFS"]
+        get_item.assets["blue"].alternate["IPFS"]
+        == update_cid["assets"]["blue"]["alternate"]["IPFS"]
     )
 
 
