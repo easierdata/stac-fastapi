@@ -11,7 +11,12 @@
         "IPFS": "QmRtciFJLQNrTq3vDnTbNVCzR9JyX9nHKsddC6sW8zUvcZ"
       }
     },
-    "MTL.json": {
+    "coastal": {
+      "alternate": {
+        "IPFS": "QmRtciFJLQNrTq3vDnTbNVCzR9JyX9nHKsddC6sW8zUvcZ"
+      }
+    },
+    "blue": {
       "alternate": {
         "IPFS": "QmRtciFJLQNrTq3vDnTbNVCzR9JyX9nHKsddC6sW8zUvcZ"
       }
@@ -74,6 +79,11 @@
     "MTL.xml": {
       "alternate": {
         "IPFS": "QmQ2QwK94eGZpyaa5YkP5sg5P5pJj5y5Gq3FVUmgd1wB7V"
+      }
+    },
+    "MTL.json": {
+      "alternate": {
+        "IPFS": "QmRtciFJLQNrTq3vDnTbNVCzR9JyX9nHKsddC6sW8zUvcZ"
       }
     },
     "qa_pixel": {
