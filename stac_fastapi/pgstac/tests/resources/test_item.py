@@ -174,13 +174,12 @@ async def test_update_item_cid(
     item: Item = load_test_item_LC09
     update_cid = load_update_cid
 
-    # Loop through assets in item and add or update the "IPFS" entry in "alternate" key
+    # Loop through assets and only update the ones that have an "alternate" entry
     for asset_name, asset in item.assets.items():
-        # If the asset is missing the "alternate" key, add it
-        if (
-            not asset.alternate
-        ):  # TODO Add a print statement to see why there is no alternate key
-            asset.alternate = {}
+        try:
+            asset.alternate
+        except AttributeError:
+            continue
         # If the asset is missing the "IPFS" entry in "alternate", add it
         if "IPFS" not in asset.alternate:
             asset.alternate["IPFS"] = update_cid["assets"][asset_name]["alternate"][
