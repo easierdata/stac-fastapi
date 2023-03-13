@@ -323,6 +323,56 @@ class CoreCrudClient(AsyncBaseCoreClient):
 
         return Item(**item_collection["features"][0])
 
+    async def update_item_cids(self, item_id: str, collection_id: str, update_cids: dict, **kwargs) -> Item:
+        """Update the IPFS CID for assets that have an alternate entry in an item.
+
+        Called with `PUT /collections/{collection_id}/items/{item_id}`.
+
+        Args:
+            item_id: ID of the item.
+            collection_id: ID of the collection the item is in.
+            update_cids: A dictionary containing the updated IPFS CID for each asset that has an "alternate" entry.
+
+        Returns:
+            Updated Item.
+        """
+        # If collection does not exist, NotFoundError will be raised
+        await self.get_collection(collection_id, **kwargs)
+
+        req = self.post_request_model(
+            ids=[item_id], collections=[collection_id], limit=1
+        )
+        item_collection = await self._search_base(req, **kwargs)
+        if not item_collection["features"]:
+            raise NotFoundError(
+                f"Item {item_id} in Collection {collection_id} does not exist."
+            )
+
+        item = Item(**item_collection["features"][0])
+
+        # Loop through assets and only update the ones that have an "alternate" entry
+        for asset_name, asset in item.assets.items():
+            try:
+                asset.alternate
+            except AttributeError:
+                continue
+            # If the asset is missing the "IPFS" entry in "alternate", add it
+            if "IPFS" not in asset.alternate:
+                asset.alternate["IPFS"] = update_cids["assets"][asset_name]["alternate"]["IPFS"]
+            # If the asset has the "IPFS" entry in "alternate", update it
+            else:
+                asset.alternate["IPFS"] = update_cids["assets"][asset_name]["alternate"]["IPFS"]
+
+        # Update existing item with modified JSON
+        resp = await self.put(
+            f"/collections/{collection_id}/items/{item_id}", content=item.json()
+        )
+        if resp.status_code != 200:
+            raise HTTPException(status_code=resp.status_code, detail=resp.text)
+
+        return Item.parse_raw(resp.text)
+
+
     async def post_search(
         self, search_request: PgstacSearch, **kwargs
     ) -> ItemCollection:
