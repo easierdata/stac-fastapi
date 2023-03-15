@@ -1,8 +1,8 @@
 """transaction extension."""
-from typing import List, Optional, Type, Union
-
+from typing import List, Optional, Type, Union, Dict
+from pydantic import BaseModel
 import attr
-from fastapi import APIRouter, Body, FastAPI
+from fastapi import APIRouter, Body, FastAPI, Request, Path
 from stac_pydantic import Collection, Item
 from starlette.responses import JSONResponse, Response
 
@@ -26,6 +26,12 @@ class PutItem(ItemUri):
     """Update Item."""
 
     item: stac_types.Item = attr.ib(default=Body(None))
+
+
+
+class PutItemCids(BaseModel):
+    """Update Item CIDs."""
+    payload: Dict
 
 
 @attr.s
@@ -83,6 +89,26 @@ class TransactionExtension(ApiExtension):
             response_model_exclude_none=True,
             methods=["PUT"],
             endpoint=create_async_endpoint(self.client.update_item, PutItem),
+        )
+
+    def register_update_item_cids(self):
+        """Register update item cids endpoint (PUT /collections/{collection_id}/items/{item_id}/update-item-cids).
+
+        Returns:
+            None
+        """
+        self.router.add_api_route(
+            name="Update Item CIDs",
+            path="/collections/{collection_id}/items/{item_id}/update-item-cids",
+            response_model=Item if self.settings.enable_response_models else None,
+            response_class=self.response_class,
+            response_model_exclude_unset=True,
+            response_model_exclude_none=True,
+            methods=["PUT"],
+            endpoint=create_async_endpoint(
+                self.client.update_item_cids,
+                PutItemCids,
+            ),
         )
 
     def register_delete_item(self):
@@ -155,6 +181,7 @@ class TransactionExtension(ApiExtension):
         self.router.prefix = app.state.router_prefix
         self.register_create_item()
         self.register_update_item()
+        self.register_update_item_cids()
         self.register_delete_item()
         self.register_create_collection()
         self.register_update_collection()

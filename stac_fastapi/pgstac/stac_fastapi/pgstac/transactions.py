@@ -1,9 +1,10 @@
 """transactions extension client."""
 
 import logging
-from typing import Optional, Union
+from typing import Optional, Union, Dict
 
 import attr
+import requests
 from buildpg import render
 from fastapi import HTTPException
 from starlette.responses import JSONResponse, Response
@@ -72,6 +73,46 @@ class TransactionsClient(AsyncBaseTransactionsClient):
             request=request,
         ).get_links(extra_links=item.get("links"))
         return stac_types.Item(**item)
+
+    async def update_item_cids(
+        self, collection_id: str, item_id: str, payload: Dict, **kwargs
+    ) -> Optional[Union[stac_types.Item, Response]]:
+        """Update the IPFS CID for assets that have an alternate entry in an item."""
+
+        # 1. Retrieve the existing item
+        request = kwargs["request"]
+        pool = request.app.state.readpool
+        existing_item = await dbfunc(
+            pool,
+            "get_item",
+            {
+                "collection_id": str(collection_id),  # Convert to string
+                "item_id": str(item_id),  # Convert to string
+            },
+        )
+
+        if not existing_item:
+            raise HTTPException(status_code=404, detail="Item not found")
+
+        # 2. Update the item with the provided 'alternate' key:value pair
+        for asset_name, asset_data in payload.assets.items():
+            if asset_name in existing_item["assets"]:
+                existing_item["assets"][asset_name].update(asset_data)
+            else:
+                existing_item["assets"][asset_name] = asset_data
+
+        # 3. Save the updated item back to your data store
+        pool = request.app.state.writepool
+        await dbfunc(pool, "create_item", existing_item)
+
+        # 4. Update the links and return the updated item as a response
+        existing_item["links"] = await ItemLinks(
+            collection_id=collection_id,
+            item_id=item_id,
+            request=request,
+        ).get_links(extra_links=existing_item.get("links"))
+
+        return stac_types.Item(**existing_item)
 
     async def create_collection(
         self, collection: stac_types.Collection, **kwargs

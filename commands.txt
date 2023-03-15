@@ -5,4 +5,4 @@ docker-compose down
 
 make run-landsat-pgstac
 http://localhost:8082/
-http://localhost:8082/collections/landsat-c2l1/items/LC09_L1GT_019032_20211031_20220118_02_T2/enrich-item-cids
+http://localhost:8082/collections/landsat-c2l1/items/LC09_L1GT_019032_20211031_20220118_02_T2

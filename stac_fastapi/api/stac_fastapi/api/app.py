@@ -33,6 +33,7 @@ from stac_fastapi.types.extension import ApiExtension
 from stac_fastapi.types.search import BaseSearchGetRequest, BaseSearchPostRequest
 
 
+
 @attr.s
 class StacApi:
     """StacApi factory.
@@ -167,6 +168,7 @@ class StacApi:
             ),
         )
 
+
     def register_post_search(self):
         """Register search endpoint (POST /search).
 
@@ -282,25 +284,6 @@ class StacApi:
             ),
         )
 
-    def register_update_item_cids(self):
-        """Register update item cids endpoint (PUT /collections/{collection_id}/items/{item_id}/update-item-cids).
-
-        Returns:
-            None
-        """
-        self.router.add_api_route(
-            name="Update Item CIDs",
-            path="/collections/{collection_id}/items/{item_id}/update-item-cids",
-            response_model=Item if self.settings.enable_response_models else None,
-            response_class=GeoJSONResponse,
-            response_model_exclude_unset=True,
-            response_model_exclude_none=True,
-            methods=["PUT"],
-            endpoint=create_async_endpoint(
-                self.client.update_item_cids, ItemUri, GeoJSONResponse
-            ),
-        )
-
 
     def register_core(self):
         """Register core STAC endpoints.
@@ -327,7 +310,6 @@ class StacApi:
         self.register_get_collections()
         self.register_get_collection()
         self.register_get_item_collection()
-        self.register_update_item_cids()
 
     def customize_openapi(self) -> Optional[Dict[str, Any]]:
         """Customize openapi schema."""
