@@ -1,6 +1,15 @@
+appdirs
 black
+httpcore
+httpx
+idna
+ipfshttpclient
 jupyter
 matplotlib
+multiaddr
 numpy
 pystac-client
 rasterio
+setuptools
+wheel
+zmq
