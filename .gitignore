@@ -135,3 +135,6 @@ venv
 
 # SSL
 certs
+
+# Landsat Scenes
+/samples/*.TIF
