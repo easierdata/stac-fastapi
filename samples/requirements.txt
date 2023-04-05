@@ -3,3 +3,4 @@ matplotlib
 numpy
 pystac-client
 rasterio
+python-dateutil
