@@ -1,3 +1,6 @@
-pystac-client
-black
 jupyter
+matplotlib
+numpy
+pystac-client
+rasterio
+python-dateutil

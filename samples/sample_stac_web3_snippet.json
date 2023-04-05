@@ -1,0 +1,166 @@
+{
+    "id": "LC09_L2SP_041034_20221005_20221007_02_T1",
+    "assets": {
+        "thumbnail": {
+            "alternate": {
+                "IPFS": {
+                    "href": "ipfs://QmRtciFJLQNrTq3vDnTbNVCzR9JyX9nHKsddC6sW8zUvcZ"
+                }
+            }
+        },
+        "reduced_resolution_browse": {
+            "alternate": {
+                "IPFS": {
+                    "href": "ipfs://QmRtciFJLQNrTq3vDnTbNVCzR9JyX9nHKsddC6sW8zUvcZ"
+                }
+            }
+        },
+        "coastal": {
+            "alternate": {
+                "IPFS": {
+                    "href": "ipfs://QmRtciFJLQNrTq3vDnTbNVCzR9JyX9nHKsddC6sW8zUvcZ"
+                }
+            }
+        },
+        "blue": {
+            "alternate": {
+                "IPFS": {
+                    "href": "ipfs://QmRtciFJLQNrTq3vDnTbNVCzR9JyX9nHKsddC6sW8zUvcZ"
+                }
+            }
+        },
+        "green": {
+            "alternate": {
+                "IPFS": {
+                    "href": "ipfs://QmdFsZ7zM1x8kLx7ttPTrJFMVTCT7wW84jKttncLvHQ9Mr"
+                }
+            }
+        },
+        "red": {
+            "alternate": {
+                "IPFS": {
+                    "href": "ipfs://QmW92gTf58bXsFrE9jJLgNLmLoB46f7jKtJc4yKPq3vm4v"
+                }
+            }
+        },
+        "nir08": {
+            "alternate": {
+                "IPFS": {
+                    "href": "ipfs://QmVijFyBjCSDHBBh2jKgFTBc5NG5DU5ZVmzqjJkwmyAWpK"
+                }
+            }
+        },
+        "swir16": {
+            "alternate": {
+                "IPFS": {
+                    "href": "ipfs://QmQzEo6UprjW8qnJL1jFz1ZYd53aGxW8mKvJk9zdfY6LU7"
+                }
+            }
+        },
+        "swir22": {
+            "alternate": {
+                "IPFS": {
+                    "href": "ipfs://QmQkN8hNnR9SwY5UB5Ch5Dcxr8FdCovEWKjJkLc7V3q4qG"
+                }
+            }
+        },
+        "pan": {
+            "alternate": {
+                "IPFS": {
+                    "href": "ipfs://QmRv7V2QMJiJkK1ZifJ84QfctKhz3q1yFVJ48C9Pf5cpZ8"
+                }
+            }
+        },
+        "cirrus": {
+            "alternate": {
+                "IPFS": {
+                    "href": "ipfs://QmWtgQ2K37Em14o9BN4JxTcWwpLQvJrjNMLrNmsKew8WpJ"
+                }
+            }
+        },
+        "lwir11": {
+            "alternate": {
+                "IPFS": {
+                    "href": "ipfs://QmZDjKcvdPnqvjHE8yir45RyDCt94X9fQmCTawF28WFXtD"
+                }
+            }
+        },
+        "lwir12": {
+            "alternate": {
+                "IPFS": {
+                    "href": "ipfs://QmXfjX2aCYyz8T8W2QvTvePbiEJrGj8ewHMFhJvSKgAV9X"
+                }
+            }
+        },
+        "ANG.txt": {
+            "alternate": {
+                "IPFS": {
+                    "href": "ipfs://QmS1V7LuAWfyoQ2jK92g9X4d4Jrc5ZjzRZtdm1dazQwctF"
+                }
+            }
+        },
+        "MTL.txt": {
+            "alternate": {
+                "IPFS": {
+                    "href": "ipfs://QmQ2QwK94eGZpyaa5YkP5sg5P5pJj5y5Gq3FVUmgd1wB7V"
+                }
+            }
+        },
+        "MTL.xml": {
+            "alternate": {
+                "IPFS": {
+                    "href": "ipfs://QmQ2QwK94eGZpyaa5YkP5sg5P5pJj5y5Gq3FVUmgd1wB7V"
+                }
+            }
+        },
+        "MTL.json": {
+            "alternate": {
+                "IPFS": {
+                    "href": "ipfs://QmRtciFJLQNrTq3vDnTbNVCzR9JyX9nHKsddC6sW8zUvcZ"
+                }
+            }
+        },
+        "qa_pixel": {
+            "alternate": {
+                "IPFS": {
+                    "href": "ipfs://QmRtciFJLQNrTq3vDnTbNVCzR9JyX9nHKsddC6sW8zUvcZ"
+                }
+            }
+        },
+        "qa_radsat": {
+            "alternate": {
+                "IPFS": {
+                    "href": "ipfs://QmRtciFJLQNrTq3vDnTbNVCzR9JyX9nHKsddC6sW8zUvcZ"
+                }
+            }
+        },
+        "VAA": {
+            "alternate": {
+                "IPFS": {
+                    "href": "ipfs://QmRtciFJLQNrTq3vDnTbNVCzR9JyX9nHKsddC6sW8zUvcZ"
+                }
+            }
+        },
+        "VZA": {
+            "alternate": {
+                "IPFS": {
+                    "href": "ipfs://QmRtciFJLQNrTq3vDnTbNVCzR9JyX9nHKsddC6sW8zUvcZ"
+                }
+            }
+        },
+        "SAA": {
+            "alternate": {
+                "IPFS": {
+                    "href": "ipfs://QmRtciFJLQNrTq3vDnTbNVCzR9JyX9nHKsddC6sW8zUvcZ"
+                }
+            }
+        },
+        "SZA": {
+            "alternate": {
+                "IPFS": {
+                    "href": "ipfs://QmRtciFJLQNrTq3vDnTbNVCzR9JyX9nHKsddC6sW8zUvcZ"
+                }
+            }
+        }
+    }
+}
