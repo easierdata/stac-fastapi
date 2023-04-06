@@ -4,3 +4,4 @@ numpy
 pystac-client
 rasterio
 python-dateutil
+python-dotenv # Used for .env file
