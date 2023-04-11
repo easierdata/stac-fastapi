@@ -1,12 +1,41 @@
+"""
+Script Name: web3_enrich_stac.py
+Author: John Solly, Zheng Liu
+Date: Apr 6, 2023
+
+Description:
+The script calculates CID for each available assets of a landsat scene
+and enrich CID information into the stac.json
+
+Usage:
+python web3_enrich_stac.py
+
+Example:
+python web3_enrich_stac.py
+"""
+
 import json
 import os
 import pathlib
 import subprocess
 import fnmatch
 import urllib.parse
+from dotenv import load_dotenv
+
+# Load the environment variables from the .env file
+load_dotenv()
+
+# Get the value of a variable
+ipfs_binary = os.getenv('ipfs_binary')
+
+# Check if the variable is set
+if ipfs_binary is not None:
+    print(f"Using the ipfs binary at {ipfs_binary}.")
+else:
+    ipfs_binary = "ipfs"
 
 def compute_cid(file_path):
-    cid = subprocess.check_output(["ipfs", "add", "-q", file_path]).decode().strip()
+    cid = subprocess.check_output([ipfs_binary, "add", "-q", file_path]).decode().strip()
     return cid
 
 def process_landsat_scene(landsat_directory):
@@ -47,6 +76,6 @@ def process_landsat_scene(landsat_directory):
 if __name__ == "__main__":
     # Set current directory to the directory of this script
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
-    landsat_directory = "LC09_L1TP_015033_20221015_20221015_02_T1"
+    landsat_directory = "LC09_L1TP_217076_20220429_20220429_02_T1"
 
     process_landsat_scene(landsat_directory)
